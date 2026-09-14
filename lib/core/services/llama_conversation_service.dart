@@ -17,13 +17,14 @@ import 'conversation_models.dart' show ConversationReply;
 /// each time — the KV cache carries the rest, which matters a lot for
 /// speed on-device.
 class LlamaConversationService {
-  // Swap this for a hosted https:// URL once the fine-tuned GGUF has a
-  // permanent home (see finetune/README.md) — ModelSource.parse treats an
-  // http(s) string as a download-once-and-cache source automatically, no
-  // other code here needs to change.
+  // Hosted on GitHub Releases (see finetune/README.md for how the GGUF is
+  // produced) — ModelSource.parse treats an http(s) string as a
+  // download-once-and-cache source automatically. Overridable via
+  // --dart-define for local testing against a device-local path.
   static const String modelSource = String.fromEnvironment(
     'LINGORING_LLM_MODEL_SOURCE',
-    defaultValue: 'lingoring-conversation-q4_k_m.gguf',
+    defaultValue:
+        'https://github.com/minkuk00123-ai/lingoring/releases/download/v0.1.0-model/lingoring-conversation-q4_k_m.gguf',
   );
 
   static const _systemPrompt =

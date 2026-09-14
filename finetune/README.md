@@ -42,12 +42,14 @@ once, then cached on-device — same pattern as `WhisperSttService`), or an
   on-device path, e.g.
   `adb push gguf/lingoring-conversation-q4_k_m.gguf /data/local/tmp/` then
   `flutter run --dart-define=LINGORING_LLM_MODEL_SOURCE=/data/local/tmp/lingoring-conversation-q4_k_m.gguf`.
-- **Shipping**: the GGUF needs a permanent public HTTPS URL (GitHub
-  Releases, a CDN, Firebase Storage, etc. — not yet decided; this is a
-  product/infra call, not just a technical one) so real installs can
-  download it on first launch, same as the whisper.cpp model. Once that URL
-  exists, rebuild with
-  `flutter build apk --release --dart-define=LINGORING_LLM_MODEL_SOURCE=https://.../lingoring-conversation-q4_k_m.gguf`.
+- **Shipping**: hosted on GitHub Releases —
+  `https://github.com/minkuk00123-ai/lingoring/releases/download/v0.1.0-model/lingoring-conversation-q4_k_m.gguf`
+  is baked in as `LlamaConversationService.modelSource`'s default, so a
+  plain `flutter build apk --release` already points at it; real installs
+  download it on first launch and cache it, same as the whisper.cpp model.
+  To ship a retrained model, upload a new release asset (see `export.sh`'s
+  output) and update that default (or pass
+  `--dart-define=LINGORING_LLM_MODEL_SOURCE=<new URL>` at build time).
 
 ## Retraining
 
